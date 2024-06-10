@@ -1,9 +1,9 @@
 import { Gameboard } from "./gameboard";
 
 export class Player {
-  #gameboard;
+  gameboard;
 
   constructor() {
-    this.#gameboard = new Gameboard(10);
+    this.gameboard = new Gameboard(10);
   }
 }

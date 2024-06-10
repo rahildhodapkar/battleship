@@ -72,6 +72,7 @@ export class Gameboard {
     }
 
     this.#ships.set(ship, shipCoord);
+    return shipCoord;
   }
 
   #isDirectHit(row, col) {
@@ -83,28 +84,40 @@ export class Gameboard {
     return null;
   }
 
-  #checkGameOver() {
+  checkGameOver() {
     for (const key of this.#ships.keys()) {
       if (!key.isSunk()) {
-        return;
+        return false;
       }
     }
+    this.#gameOver = true;
+    return true;
+  }
+
+  freezeBoard() {
     this.#gameOver = true;
   }
 
   receiveAttack(row, col) {
-    if (this.#isInvalidCoord(row, col)) {
-      return;
-    }
-
-    let ship = this.#isDirectHit(row, col);
-    if (ship) {
-      ship.hit();
-      this.#board[row][col] = "x";
-      this.#checkGameOver;
-    } else {
-      this.#board[row][col] = "o";
-      this.#missedAttacks.push([row, col]);
+    if (!this.#gameOver) {
+      if (this.#isInvalidCoord(row, col)) {
+        return;
+      }
+  
+      let ship = this.#isDirectHit(row, col);
+      if (ship) {
+        ship.hit();
+        this.#board[row][col] = "x";
+        this.checkGameOver();
+        if (ship.isSunk()) {
+          return this.#ships.get(ship);
+        } 
+        return [row, col, "y"];
+      } else {
+        this.#board[row][col] = "o";
+        this.#missedAttacks.push([row, col]);
+        return [row, col, "n"];
+      }
     }
   }
 

@@ -27,3 +27,47 @@ p, h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+/* end of reset */
+
+html, 
+body {
+  height: 100%;
+  font-size: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 1fr 15fr 1fr;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  gap: 10rem;
+}
+
+#player-board,
+#computer-board {
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(10, 4rem);
+  grid-template-rows: repeat(10, 4rem);
+}
+
+.board-cell {
+  aspect-ratio: 1/1;
+}
+
+#computer-board .board-cell:hover {
+  border: solid 2px black;
+}
+
+#win-message {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+}
